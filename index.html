@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .none {
+            display: none;
+            color: red;
+        }
+    </style>
+    <title>Todo</title>
+</head>
+<body>
+<h1>ToDoリスト</h1>
+
+    <div class="container">
+        <div class="todo_state_btn">
+            <input type="radio" name="state_btn" value="all">全て
+            <input type="radio" name="state_btn" value="working">作業中
+            <input type="radio" name="state_btn" value="complete">完了
+        </div>
+
+        <table class="todo">
+            <thead class="todo_table_title">
+                <th>ID</th>
+                <th>コメント</th>
+                <th>状態</th>
+                <th></th>
+            </thead>
+            <tbody class="todo_table_items">
+
+            </tbody>
+        </table>
+
+        <h2>新規タスク追加</h2>
+
+        <div class="add_item">
+            <input type="text" value="" name="add_item_input" class="add_item_input">
+            <button class="add_item_btn">追加</button>
+        </div>
+
+        <h3 class="none">タスクを入力してください</h3>
+
+    </div>
+
+
+<script src="main.js"></script>
+</body>
+</html>
