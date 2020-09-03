@@ -30,36 +30,41 @@ const resetInput = () => {
 
 //todolistを作成する関数
 const addTodoItems = () => {
-  let todo = elements.addItemInput.value.trim();
+  const todo = elements.addItemInput.value.trim();
   if (todo) {
-    todos.push(todo);
-  }else
+    todos.push({
+      content: todo,
+      state: '作業中'
+    })
+    console.log(todos)
+    ;
+  } else
     console.log('aaaaa');
 }
 
-//Htmlにtodolistを表示する関数
+//Htmlにtodos[]を表示する関数
 const showTodoItems = () => {
-  let html, newHtml;
+
   // 重複表示を防止
   while (elements.todoItems.firstChild) {
     elements.todoItems.removeChild(elements.todoItems.firstChild);
   }
 
-  todos.forEach((todo, index)=>{
-    let state = '作業中';
-    let table = elements.todoItems;
-    let newRow = table.insertRow();
+  todos.forEach((todo, index) => {
+    const table = elements.todoItems;
+    const newRow = table.insertRow();
+
     //各々セルに対する、データを作成
     let newCell = newRow.insertCell();
     let newText = document.createTextNode(index + 1);
     newCell.appendChild(newText);
 
     newCell = newRow.insertCell();
-    newText = document.createTextNode(todo);
+    newText = document.createTextNode(todo.content);
     newCell.appendChild(newText);
 
     const stateButton = document.createElement('button');
-    stateButton.textContent = state;
+    stateButton.textContent = todo.state;
     newCell = newRow.insertCell();
     newCell.appendChild(stateButton);
 
@@ -70,8 +75,8 @@ const showTodoItems = () => {
     newCell = newRow.insertCell();
     newCell.appendChild(deleteButton);
 
-    deleteButton.addEventListener('click', ()=>{
-      //todoListを消す関数
+    deleteButton.addEventListener('click', () => {
+      // todoListを消す関数
       // deleteTodoItem(index);
     });
 
@@ -79,7 +84,7 @@ const showTodoItems = () => {
 
 }
 
-// //todoItemを消す関数
+//todoItemを消す関数
 // const deleteTodoItem = (index)=>{
 //   todos.splice(index, 1);
 //   showTodoItems();
