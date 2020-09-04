@@ -6,7 +6,7 @@ elements = {
   addTaskBtn: document.querySelector('.add_item_btn'),
   todoItems: document.querySelector('.todo_table_items'),
   todoList: document.querySelector('.todo_list'),
-  todoTable: document.querySelector('.todo_table'),
+  todoTable: document.querySelector('.todo_table')
 }
 
 //addTaskBtnを押すと発火
@@ -36,12 +36,8 @@ const addTodoItems = () => {
       content: todo,
       state: '作業中'
     })
-    console.log(todos)
-    ;
-  } else
-    console.log('aaaaa');
+  }
 }
-
 //Htmlにtodos[]を表示する関数
 const showTodoItems = () => {
 
@@ -83,7 +79,6 @@ const showTodoItems = () => {
   });
 
 }
-
 //todoItemを消す関数
 // const deleteTodoItem = (index)=>{
 //   todos.splice(index, 1);
