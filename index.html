@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Todo</title>
+</head>
+<body>
+<h1>ToDoリスト</h1>
+
+<div class="container">
+    <div class="todo_state_btn">
+        <input id="state_btn" checked type="radio" name="state_btn" value="all">
+        <label for="state_btn">すべて</label>
+        <input type="radio" name="state_btn" value="working">
+        <label for="state_btn">作業中</label>
+        <input type="radio" name="state_btn" value="complete">
+        <label for="state_btn">完了</label>
+    </div>
+
+    <table class="todo_table">
+        <thead class="todo_table_title">
+        <tr>
+            <th>ID</th>
+            <th>コメント</th>
+            <th>状態</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody class="todo_table_items">
+
+        </tbody>
+    </table>
+
+    <h2>新規タスク追加</h2>
+
+    <div class="add_item">
+        <input type="text" value="" name="add_item_input" class="add_item_input">
+        <button class="add_item_btn">追加</button>
+    </div>
+
+</div>
+
+
+<script src="main.js"></script>
+</body>
+</html>
