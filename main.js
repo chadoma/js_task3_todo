@@ -10,7 +10,7 @@ elements = {
 }
 
 //addTaskBtnを押すと発火
-elements.addTaskBtn.addEventListener('click', (e) => {
+elements.addTaskBtn.addEventListener('click', () => {
 
 //todolistを作成する関数
   addTodoItems();
@@ -73,16 +73,17 @@ const showTodoItems = () => {
 
     deleteButton.addEventListener('click', () => {
       // todoListを消す関数
-      // deleteTodoItem(index);
+      deleteTodoItem(index);
     });
 
   });
 
 }
-//todoItemを消す関数
-// const deleteTodoItem = (index)=>{
-//   todos.splice(index, 1);
-//   showTodoItems();
-// }
-//
-//
+
+// todoItemを消す関数
+const deleteTodoItem = (index)=>{
+  todos.splice(index, 1);
+  showTodoItems();
+}
+
+
