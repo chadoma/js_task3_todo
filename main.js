@@ -6,39 +6,74 @@ elements = {
   addTaskBtn: document.querySelector('.add_item_btn'),
   todoItems: document.querySelector('.todo_table_items'),
   todoList: document.querySelector('.todo_list'),
-  todoTable: document.querySelector('.todo_table')
+  todoTable: document.querySelector('.todo_table'),
+  todoStateBtn: document.querySelector('.todo_state_btn')
 };
+
 
 //addTaskBtnを押すとイベント
 elements.addTaskBtn.addEventListener('click', () => {
 
-//todolistを作成する関数
-  addTodoItems();
-//htmlにtodoListを表示する関数
-  showTodoItems();
-//input入力をresetする関数
+//todolistを作成
+  createTodoItems();
+//classを付ける事にによって、表示するか分ける
+  addClass();
+//input入力をreset
   resetInput();
-
 });
 
-//
+//radioボタンのvalueが変わるとイベント
+elements.todoStateBtn.addEventListener('change', () => {
+  addClass();
+});
+
+
+
+//todolistを作成する関数
+const createTodoItems = () => {
+  const todo = elements.addItemInput.value.trim();
+  if (todo) {
+    todos.push({
+      content: todo,
+      state: false
+    });
+  }
+};
+
+
+//classを付ける事にによって、表示するか分ける
+const addClass = () => {
+  const type = elements.todoStateBtn.type.value;
+  if (type === 'active') {
+    showTodoItems();
+    Array.from(elements.todoItems.children)
+        .filter((todo) => !todo.textContent.includes('作業中'))
+        .forEach((todo) => todo.classList.add('filtered'));
+
+    Array.from(elements.todoItems.children)
+        .filter((todo) => todo.textContent.includes('作業中'))
+        .forEach((todo) => todo.classList.remove('filtered'));
+
+  } else if (type === 'complete') {
+    showTodoItems();
+    Array.from(elements.todoItems.children)
+        .filter((todo) => !todo.textContent.includes('完了'))
+        .forEach((todo) => todo.classList.add('filtered'));
+
+    Array.from(elements.todoItems.children)
+        .filter((todo) => todo.textContent.includes('完了'))
+        .forEach((todo) => todo.classList.remove('filtered'));
+  } else {
+    showTodoItems();
+  }
+
+};
 
 //input入力をresetする関数
 const resetInput = () => {
   elements.addItemInput.value = '';
 };
 
-
-//todolistを作成する関数
-const addTodoItems = () => {
-  const todo = elements.addItemInput.value.trim();
-  if (todo) {
-    todos.push({
-      content: todo,
-      state: '作業中'
-    });
-  }
-};
 
 //todoItemsにtodos[]を表示する関数
 const showTodoItems = () => {
@@ -54,27 +89,22 @@ const showTodoItems = () => {
 
     //各々セルに対する、データを作成
     let newCell = newRow.insertCell();
-    let newText = document.createTextNode(index + 1);
+    let newText = document.createTextNode(index);
     newCell.appendChild(newText);
 
     newCell = newRow.insertCell();
     newText = document.createTextNode(todo.content);
     newCell.appendChild(newText);
 
+
     const stateButton = document.createElement('button');
-    stateButton.textContent = todo.state;
+
+    stateButton.textContent = todo.state ? '完了' : '作業中';
     newCell = newRow.insertCell();
     newCell.appendChild(stateButton);
 
-    //stateButtonボタンを押すと作業中と完了が入れ替わる
-    stateButton.addEventListener('click', () => {
-      if (todo.state === '作業中') {
-        todo.state = '完了';
-      } else if (todo.state === '完了'){
-        todo.state = '作業中';
-      }
-      showTodoItems()
-    });
+    //stateButtonを押すと作業中と完了が入れ替わる
+    toggleButton(stateButton, todo);
 
     //todolistを消すbuttonを作成
     const deleteButton = document.createElement("button");
@@ -92,10 +122,18 @@ const showTodoItems = () => {
 
 };
 
+
 // todoItemを消す関数
 const deleteTodoItem = (index) => {
   todos.splice(index, 1);
-  showTodoItems();
+  addClass();
 };
 
+//stateButtonのtoggle
+const toggleButton = (stateButton, todo) => {
+  stateButton.addEventListener('click', () => {
+    todo.state = !todo.state;
+    stateButton.textContent = todo.state ? '完了' : '作業中';
+  });
+};
 
