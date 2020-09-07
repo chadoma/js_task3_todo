@@ -52,7 +52,7 @@ const showTodoItems = () => {
 
     //各々セルに対する、データを作成
     let newCell = newRow.insertCell();
-    let newText = document.createTextNode(index + 1);
+    let newText = document.createTextNode(index);
     newCell.appendChild(newText);
 
     newCell = newRow.insertCell();
@@ -60,12 +60,12 @@ const showTodoItems = () => {
     newCell.appendChild(newText);
 
     const stateButton = document.createElement('button');
-    stateButton.addEventListener('click', () => {
-      toggleButton(stateButton, todo.state);
-    });
+
     stateButton.textContent = todo.state ? '完了' : '作業中';
     newCell = newRow.insertCell();
     newCell.appendChild(stateButton);
+    //stateBtnのtoggle
+    toggleButton(stateButton, todo);
 
     //todolistを消すbuttonを作成
     const deleteButton = document.createElement("button");
@@ -88,10 +88,10 @@ const deleteTodoItem = (index) => {
   showTodoItems();
 };
 
-const toggleButton = (button, state) => {
-  state = !state;
-  console.log(state);
-  button.textContent = state;
+
+const toggleButton = (stateButton, todo) => {
+  stateButton.addEventListener('click', () => {
+    todo.state = !todo.state;
+    stateButton.textContent = todo.state ? '完了' : '作業中';
+  });
 };
-
-
