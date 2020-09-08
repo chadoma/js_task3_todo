@@ -7,13 +7,13 @@ elements = {
   todoItems: document.querySelector('.todo_table_items'),
   todoList: document.querySelector('.todo_list'),
   todoTable: document.querySelector('.todo_table')
-}
+};
 
 //addTaskBtnを押すと発火
-elements.addTaskBtn.addEventListener('click', (e) => {
+elements.addTaskBtn.addEventListener('click', () => {
 
 //todolistを作成する関数
-  addTodoItems();
+  createTodoItems();
 //htmlにtodoListを表示する関数
   showTodoItems();
 //input入力をresetする関数
@@ -25,19 +25,19 @@ elements.addTaskBtn.addEventListener('click', (e) => {
 //input入力をresetする関数
 const resetInput = () => {
   elements.addItemInput.value = '';
-}
+};
 
 
 //todolistを作成する関数
-const addTodoItems = () => {
+const createTodoItems = () => {
   const todo = elements.addItemInput.value.trim();
   if (todo) {
     todos.push({
       content: todo,
-      state: '作業中'
-    })
+      state: false
+    });
   }
-}
+};
 //Htmlにtodos[]を表示する関数
 const showTodoItems = () => {
 
@@ -52,7 +52,7 @@ const showTodoItems = () => {
 
     //各々セルに対する、データを作成
     let newCell = newRow.insertCell();
-    let newText = document.createTextNode(index + 1);
+    let newText = document.createTextNode(index);
     newCell.appendChild(newText);
 
     newCell = newRow.insertCell();
@@ -60,29 +60,38 @@ const showTodoItems = () => {
     newCell.appendChild(newText);
 
     const stateButton = document.createElement('button');
-    stateButton.textContent = todo.state;
+
+    stateButton.textContent = todo.state ? '完了' : '作業中';
     newCell = newRow.insertCell();
     newCell.appendChild(stateButton);
+    //stateBtnのtoggle
+    toggleButton(stateButton, todo);
 
     //todolistを消すbuttonを作成
     const deleteButton = document.createElement("button");
     deleteButton.textContent = '削除';
-
     newCell = newRow.insertCell();
     newCell.appendChild(deleteButton);
 
     deleteButton.addEventListener('click', () => {
       // todoListを消す関数
-      // deleteTodoItem(index);
+      deleteTodoItem(index);
     });
 
   });
 
-}
-//todoItemを消す関数
-// const deleteTodoItem = (index)=>{
-//   todos.splice(index, 1);
-//   showTodoItems();
-// }
-//
-//
+};
+
+// todoItemを消す関数
+const deleteTodoItem = (index) => {
+  todos.splice(index, 1);
+  showTodoItems();
+};
+
+
+const toggleButton = (stateButton, todo) => {
+  stateButton.addEventListener('click', () => {
+    todo.state = !todo.state;
+    stateButton.textContent = todo.state ? '完了' : '作業中';
+  });
+};
