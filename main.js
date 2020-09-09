@@ -13,20 +13,20 @@ elements = {
 
 //addTaskBtnを押すとイベント
 elements.addTaskBtn.addEventListener('click', () => {
-
 //todolistを作成
   createTodoItems();
 //classを付ける事にによって、表示するか分ける
-  addClass();
+  switchTodoItemsDisplay();
 //input入力をreset
   resetInput();
 });
 
+
 //radioボタンのvalueが変わるとイベント
 elements.todoStateBtn.addEventListener('change', () => {
-  addClass();
+//radioBtnのvalueによって表示を切り替える
+  switchTodoItemsDisplay();
 });
-
 
 
 //todolistを作成する関数
@@ -41,33 +41,25 @@ const createTodoItems = () => {
 };
 
 
-//classを付ける事にによって、表示するか分ける
-const addClass = () => {
+//radioBtnのvalueによって表示を切り替える
+//filteredクラスを付けて表示を消す
+const switchTodoItemsDisplay = () => {
+  showTodoItems();
+
   const type = elements.todoStateBtn.type.value;
+
   if (type === 'active') {
-    showTodoItems();
     Array.from(elements.todoItems.children)
         .filter((todo) => !todo.textContent.includes('作業中'))
         .forEach((todo) => todo.classList.add('filtered'));
 
-    Array.from(elements.todoItems.children)
-        .filter((todo) => todo.textContent.includes('作業中'))
-        .forEach((todo) => todo.classList.remove('filtered'));
-
   } else if (type === 'complete') {
-    showTodoItems();
     Array.from(elements.todoItems.children)
         .filter((todo) => !todo.textContent.includes('完了'))
         .forEach((todo) => todo.classList.add('filtered'));
-
-    Array.from(elements.todoItems.children)
-        .filter((todo) => todo.textContent.includes('完了'))
-        .forEach((todo) => todo.classList.remove('filtered'));
-  } else {
-    showTodoItems();
   }
-
 };
+
 
 //input入力をresetする関数
 const resetInput = () => {
@@ -77,7 +69,6 @@ const resetInput = () => {
 
 //todoItemsにtodos[]を表示する関数
 const showTodoItems = () => {
-
   // 重複表示を防止
   while (elements.todoItems.firstChild) {
     elements.todoItems.removeChild(elements.todoItems.firstChild);
@@ -96,9 +87,7 @@ const showTodoItems = () => {
     newText = document.createTextNode(todo.content);
     newCell.appendChild(newText);
 
-
     const stateButton = document.createElement('button');
-
     stateButton.textContent = todo.state ? '完了' : '作業中';
     newCell = newRow.insertCell();
     newCell.appendChild(stateButton);
@@ -126,7 +115,7 @@ const showTodoItems = () => {
 // todoItemを消す関数
 const deleteTodoItem = (index) => {
   todos.splice(index, 1);
-  addClass();
+  switchTodoItemsDisplay();
 };
 
 //stateButtonのtoggle
