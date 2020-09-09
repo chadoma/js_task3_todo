@@ -64,8 +64,9 @@ const showTodoItems = () => {
     stateButton.textContent = todo.state ? '完了' : '作業中';
     newCell = newRow.insertCell();
     newCell.appendChild(stateButton);
-    //stateBtnのtoggle
-    // toggleButton(stateButton, todo);
+
+    // state状態変更button
+    toggleButton(stateButton, todo);
 
     //todolistを消すbuttonを作成
     const deleteButton = document.createElement("button");
@@ -88,10 +89,10 @@ const deleteTodoItem = (index) => {
   showTodoItems();
 };
 
-
-// const toggleButton = (stateButton, todo) => {
-//   stateButton.addEventListener('click', () => {
-//     todo.state = !todo.state;
-//     stateButton.textContent = todo.state ? '完了' : '作業中';
-//   });
-// };
+//state状態変更button
+const toggleButton = (stateButton, todo) => {
+  stateButton.addEventListener('click', () => {
+    todo.state = !todo.state;
+    stateButton.textContent = todo.state ? '完了' : '作業中';
+  });
+};
