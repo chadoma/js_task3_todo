@@ -10,7 +10,6 @@ elements = {
   todoStateBtn: document.querySelector('.todo_state_btn')
 };
 
-
 //addTaskBtnを押すとイベント
 elements.addTaskBtn.addEventListener('click', () => {
 //todolistを作成
@@ -45,9 +44,8 @@ const createTodoItems = () => {
 //filteredクラスを付けて表示を消す
 const switchTodoItemsDisplay = () => {
   showTodoItems();
-
+  
   const type = elements.todoStateBtn.type.value;
-
   if (type === 'active') {
     Array.from(elements.todoItems.children)
         .filter((todo) => !todo.textContent.includes('作業中'))
@@ -88,6 +86,7 @@ const showTodoItems = () => {
     newCell.appendChild(newText);
 
     const stateButton = document.createElement('button');
+
     stateButton.textContent = todo.state ? '完了' : '作業中';
     newCell = newRow.insertCell();
     newCell.appendChild(stateButton);
@@ -98,7 +97,6 @@ const showTodoItems = () => {
     //todolistを消すbuttonを作成
     const deleteButton = document.createElement("button");
     deleteButton.textContent = '削除';
-
     newCell = newRow.insertCell();
     newCell.appendChild(deleteButton);
 
@@ -110,7 +108,6 @@ const showTodoItems = () => {
   });
 
 };
-
 
 // todoItemを消す関数
 const deleteTodoItem = (index) => {
@@ -125,4 +122,3 @@ const toggleButton = (stateButton, todo) => {
     stateButton.textContent = todo.state ? '完了' : '作業中';
   });
 };
-
