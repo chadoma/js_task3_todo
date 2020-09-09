@@ -9,7 +9,7 @@ elements = {
   todoTable: document.querySelector('.todo_table')
 };
 
-//addTaskBtnを押すと発火
+//addTaskBtnを押すとイベント
 elements.addTaskBtn.addEventListener('click', () => {
 
 //todolistを作成する関数
