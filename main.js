@@ -6,26 +6,26 @@ elements = {
   addTaskBtn: document.querySelector('.add_item_btn'),
   todoItems: document.querySelector('.todo_table_items'),
   todoList: document.querySelector('.todo_list'),
-  todoTable: document.querySelector('.todo_table')
+  todoTable: document.querySelector('.todo_table'),
+  todoStateBtn: document.querySelector('.todo_state_btn')
 };
 
 //addTaskBtnを押すとイベント
 elements.addTaskBtn.addEventListener('click', () => {
-
-//todolistを作成する関数
+//todolistを作成
   createTodoItems();
-//htmlにtodoListを表示する関数
-  showTodoItems();
-//input入力をresetする関数
+//classを付ける事にによって、表示するか分ける
+  switchTodoItemsDisplay();
+//input入力をreset
   resetInput();
-
 });
 
 
-//input入力をresetする関数
-const resetInput = () => {
-  elements.addItemInput.value = '';
-};
+//radioボタンのvalueが変わるとイベント
+elements.todoStateBtn.addEventListener('change', () => {
+//radioBtnのvalueによって表示を切り替える
+  switchTodoItemsDisplay();
+});
 
 
 //todolistを作成する関数
@@ -38,9 +38,35 @@ const createTodoItems = () => {
     });
   }
 };
-//Htmlにtodos[]を表示する関数
-const showTodoItems = () => {
 
+
+//radioBtnのvalueによって表示を切り替える
+//filteredクラスを付けて表示を消す
+const switchTodoItemsDisplay = () => {
+  showTodoItems();
+  
+  const type = elements.todoStateBtn.type.value;
+  if (type === 'active') {
+    Array.from(elements.todoItems.children)
+        .filter((todo) => !todo.textContent.includes('作業中'))
+        .forEach((todo) => todo.classList.add('filtered'));
+
+  } else if (type === 'complete') {
+    Array.from(elements.todoItems.children)
+        .filter((todo) => !todo.textContent.includes('完了'))
+        .forEach((todo) => todo.classList.add('filtered'));
+  }
+};
+
+
+//input入力をresetする関数
+const resetInput = () => {
+  elements.addItemInput.value = '';
+};
+
+
+//todoItemsにtodos[]を表示する関数
+const showTodoItems = () => {
   // 重複表示を防止
   while (elements.todoItems.firstChild) {
     elements.todoItems.removeChild(elements.todoItems.firstChild);
@@ -65,7 +91,7 @@ const showTodoItems = () => {
     newCell = newRow.insertCell();
     newCell.appendChild(stateButton);
 
-    // state状態変更button
+    //stateButtonを押すと作業中と完了が入れ替わる
     toggleButton(stateButton, todo);
 
     //todolistを消すbuttonを作成
@@ -86,10 +112,10 @@ const showTodoItems = () => {
 // todoItemを消す関数
 const deleteTodoItem = (index) => {
   todos.splice(index, 1);
-  showTodoItems();
+  switchTodoItemsDisplay();
 };
 
-//state状態変更button
+//stateButtonのtoggle
 const toggleButton = (stateButton, todo) => {
   stateButton.addEventListener('click', () => {
     todo.state = !todo.state;
